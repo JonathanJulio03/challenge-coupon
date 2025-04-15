@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "dce27d71-e5a4-4a1a-875c-bbcf76fb382c",
+		"name": "Challenge-Coupon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18203458"
+	},
+	"item": [
+		{
+			"name": "Api",
+			"item": [
+				{
+					"name": "1. coupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_ids\": [\r\n        \"MLA000000000\",\r\n        \"MLA000000998\",\r\n        \"MLA000000997\",\r\n        \"MLA000000004\",\r\n        \"MLA000000005\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000003\",\r\n        \"MLA000000982\"\r\n    ],\r\n    \"amount\": 500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://challenge-test.online/coupon",
+							"protocol": "https",
+							"host": [
+								"challenge-test",
+								"online"
+							],
+							"path": [
+								"coupon"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_ids\": [\r\n        \"MLA000000000\",\r\n        \"MLA000000998\",\r\n        \"MLA000000997\",\r\n        \"MLA000000004\",\r\n        \"MLA000000005\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000003\",\r\n        \"MLA000000982\"\r\n    ],\r\n    \"amount\": 500\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/coupon",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"coupon"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"total\": 500,\n    \"item_ids\": [\n        \"MLA000000012\",\n        \"MLA000000010\",\n        \"MLA000000000\"\n    ]\n}"
+						},
+						{
+							"name": "400",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_ids\": [\r\n        \"MLA000000000\",\r\n        \"MLA000000998\",\r\n        \"MLA000000997\",\r\n        \"MLA000000004\",\r\n        \"MLA000000005\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000003\",\r\n        \"MLA000000982\"\r\n    ],\r\n    \"amount\": 500\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/coupon",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"coupon"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": \"CCB0002\",\n    \"message\": \"Don't get items\"\n}"
+						}
+					]
+				},
+				{
+					"name": "2. coupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_ids\": [\r\n        \"MLA000000025\",\r\n        \"MLA000000026\",\r\n        \"MLA000000027\",\r\n        \"MLA000000028\",\r\n        \"MLA000000029\",\r\n        \"MLA000000030\",\r\n        \"MLA000000031\",\r\n        \"MLA000000032\",\r\n        \"MLA000000033\",\r\n        \"MLA000000034\",\r\n        \"MLA000000035\",\r\n        \"MLA000000036\",\r\n        \"MLA000000037\",\r\n        \"MLA000000038\",\r\n        \"MLA000000039\",\r\n        \"MLA000000040\",\r\n        \"MLA000000041\",\r\n        \"MLA000000042\",\r\n        \"MLA000000043\",\r\n        \"MLA000000044\",\r\n        \"MLA000000045\",\r\n        \"MLA000000046\",\r\n        \"MLA000000047\",\r\n        \"MLA000000048\",\r\n        \"MLA000000049\",\r\n        \"MLA000000050\"\r\n    ],\r\n    \"amount\": 500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://challenge-test.online/coupon",
+							"protocol": "https",
+							"host": [
+								"challenge-test",
+								"online"
+							],
+							"path": [
+								"coupon"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_ids\": [\r\n        \"MLA000000000\",\r\n        \"MLA000000998\",\r\n        \"MLA000000997\",\r\n        \"MLA000000004\",\r\n        \"MLA000000005\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000003\",\r\n        \"MLA000000982\"\r\n    ],\r\n    \"amount\": 500\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/coupon",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"coupon"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"total\": 398.0,\r\n    \"item_ids\": [\r\n        \"MLA000000044\",\r\n        \"MLA000000025\"\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "3. coupon",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"item_ids\": [\r\n        \"MLA000000000\",\r\n        \"MLA000000998\",\r\n        \"MLA000000997\",\r\n        \"MLA000000004\",\r\n        \"MLA000000005\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000003\",\r\n        \"MLA000000982\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000025\",\r\n        \"MLA000000026\",\r\n        \"MLA000000027\",\r\n        \"MLA000000028\",\r\n        \"MLA000000029\",\r\n        \"MLA000000030\",\r\n        \"MLA000000031\",\r\n        \"MLA000000032\",\r\n        \"MLA000000033\",\r\n        \"MLA000000034\",\r\n        \"MLA000000035\",\r\n        \"MLA000000036\",\r\n        \"MLA000000037\",\r\n        \"MLA000000038\",\r\n        \"MLA000000039\",\r\n        \"MLA000000040\",\r\n        \"MLA000000041\",\r\n        \"MLA000000042\",\r\n        \"MLA000000043\",\r\n        \"MLA000000044\",\r\n        \"MLA000000045\",\r\n        \"MLA000000046\",\r\n        \"MLA000000047\",\r\n        \"MLA000000048\",\r\n        \"MLA000000049\"\r\n    ],\r\n    \"amount\": 500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://challenge-test.online/coupon",
+							"protocol": "https",
+							"host": [
+								"challenge-test",
+								"online"
+							],
+							"path": [
+								"coupon"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"item_ids\": [\r\n        \"MLA000000000\",\r\n        \"MLA000000998\",\r\n        \"MLA000000997\",\r\n        \"MLA000000004\",\r\n        \"MLA000000005\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000003\",\r\n        \"MLA000000982\",\r\n        \"MLA000000006\",\r\n        \"MLA000000007\",\r\n        \"MLA000000008\",\r\n        \"MLA000000009\",\r\n        \"MLA000000010\",\r\n        \"MLA000000011\",\r\n        \"MLA000000012\",\r\n        \"MLA000000019\",\r\n        \"MLA000000013\",\r\n        \"MLA000000014\",\r\n        \"MLA000000015\",\r\n        \"MLA000000016\",\r\n        \"MLA000000017\",\r\n        \"MLA000000018\",\r\n        \"MLA000000989\",\r\n        \"MLA000000025\",\r\n        \"MLA000000026\",\r\n        \"MLA000000027\",\r\n        \"MLA000000028\",\r\n        \"MLA000000029\",\r\n        \"MLA000000030\",\r\n        \"MLA000000031\",\r\n        \"MLA000000032\",\r\n        \"MLA000000033\",\r\n        \"MLA000000034\",\r\n        \"MLA000000035\",\r\n        \"MLA000000036\",\r\n        \"MLA000000037\",\r\n        \"MLA000000038\",\r\n        \"MLA000000039\",\r\n        \"MLA000000040\",\r\n        \"MLA000000041\",\r\n        \"MLA000000042\",\r\n        \"MLA000000043\",\r\n        \"MLA000000044\",\r\n        \"MLA000000045\",\r\n        \"MLA000000046\",\r\n        \"MLA000000047\",\r\n        \"MLA000000048\",\r\n        \"MLA000000049\"\r\n    ],\r\n    \"amount\": 500\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/coupon",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"coupon"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\r\n    \"total\": 500.0,\r\n    \"item_ids\": [\r\n        \"MLA000000012\",\r\n        \"MLA000000010\",\r\n        \"MLA000000000\"\r\n    ]\r\n}"
+						}
+					]
+				},
+				{
+					"name": "redemption",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/redemption-top",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"redemption-top"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/redemption-top",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"redemption-top"
+									]
+								}
+							},
+							"code": 20,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"MLA000000004\": 4\n    },\n    {\n        \"MLA000000005\": 4\n    },\n    {\n        \"MLA000000997\": 4\n    },\n    {\n        \"MLA000000006\": 4\n    },\n    {\n        \"MLA000000008\": 4\n    }\n]"
+						}
+					]
+				}
+			]
+		}
+	]
+}
