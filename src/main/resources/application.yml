@@ -78,6 +78,3 @@ properties:
     token:
       name: "task_Token"
       rate: "20000" #20 Seconds
-logging:
-  level:
-    feign: DEBUG

@@ -4,7 +4,9 @@ import static challenge.meli.coupon.commons.helper.Constants.ERROR_THREAD_VIRTUA
 
 import challenge.meli.coupon.application.input.CouponUseCase;
 import challenge.meli.coupon.application.output.DbPort;
+import challenge.meli.coupon.commons.exception.BusinessException;
 import challenge.meli.coupon.commons.exception.ErrorException;
+import challenge.meli.coupon.commons.exception.message.BusinessErrorMessage;
 import challenge.meli.coupon.domain.ItemModel;
 import challenge.meli.coupon.domain.strategy.FillCouponGetItem;
 import challenge.meli.coupon.domain.strategy.ItemFetcher;
@@ -44,6 +46,7 @@ public class CouponService implements CouponUseCase {
 
     try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
       items = executor.submit(() -> itemFetcher.fetch(uniqueIds)).get();
+      if (items.isEmpty()) throw new BusinessException(BusinessErrorMessage.ERROR_GET_ITEMS);
       selectedItems = fillCouponGetItem.get(items, couponRequest.getAmount());
     } catch (InterruptedException | ExecutionException e) {
       Thread.currentThread().interrupt();

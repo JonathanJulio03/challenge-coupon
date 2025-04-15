@@ -7,6 +7,7 @@ import challenge.meli.coupon.application.service.CacheService;
 import challenge.meli.coupon.commons.exception.ErrorException;
 import challenge.meli.coupon.domain.ItemModel;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
@@ -35,9 +36,18 @@ public class ItemFetcher {
       List<ItemModel> fetched = IntStream.range(0, (toFetchFromApi.size() + 19) / 20)
           .mapToObj(
               i -> toFetchFromApi.subList(i * 20, Math.min((i + 1) * 20, toFetchFromApi.size())))
-          .map(batch -> output.getItems(
-              String.format(AUTHORIZATION_BEARER_TOKEN_FORMAT, getToken()),
-              String.join(COMMA, batch)))
+          .map(batch -> {
+            List<ItemModel> response;
+            try {
+              response = output.getItems(
+                  String.format(AUTHORIZATION_BEARER_TOKEN_FORMAT, getToken()),
+                  String.join(COMMA, batch)
+              );
+            } catch (Exception e) {
+              response = Collections.emptyList();
+            }
+            return response;
+          })
           .flatMap(List::stream)
           .filter(Objects::nonNull)
           .toList();

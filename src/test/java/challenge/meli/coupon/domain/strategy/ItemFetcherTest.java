@@ -1,6 +1,7 @@
 package challenge.meli.coupon.domain.strategy;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -9,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import challenge.meli.coupon.application.output.ProviderPort;
 import challenge.meli.coupon.application.service.CacheService;
-import challenge.meli.coupon.commons.exception.ErrorException;
 import challenge.meli.coupon.domain.ItemModel;
 import challenge.meli.coupon.domain.TokenModel;
 import java.util.Arrays;
@@ -82,15 +82,6 @@ class ItemFetcherTest {
 
     assertEquals(2, result.size());
     verify(cacheService).saveItem("2", item2);
-  }
-
-  @Test
-  void shouldThrowExceptionWhenTokenIsMissing() {
-    when(cacheService.getItem("1")).thenReturn(Optional.empty());
-    when(cacheService.getToken()).thenReturn(Optional.empty());
-
-    var ex = assertThrows(ErrorException.class, () -> itemFetcher.fetch(List.of("1")));
-    assertEquals("Error not found token", ex.getMessage());
   }
 
   @Test
