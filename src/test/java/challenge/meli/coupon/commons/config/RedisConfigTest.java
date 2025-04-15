@@ -3,6 +3,7 @@ package challenge.meli.coupon.commons.config;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import challenge.meli.coupon.domain.ItemModel;
@@ -10,6 +11,9 @@ import challenge.meli.coupon.domain.TokenModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -24,6 +28,27 @@ class RedisConfigTest {
   void setUp() {
     redisConfig = new RedisConfig();
     mockConnectionFactory = mock(RedisConnectionFactory.class);
+  }
+
+  @Test
+  void redisConnectionFactoryShouldCreateJedisConnectionFactory() {
+    String host = "localhost";
+    int port = 6379;
+    boolean useSsl = true;
+
+    RedisConnectionFactory factory = redisConfig.redisConnectionFactory(host, port, useSsl);
+
+    assertNotNull(factory);
+    assertInstanceOf(JedisConnectionFactory.class, factory);
+
+    JedisConnectionFactory jedisFactory = (JedisConnectionFactory) factory;
+
+    RedisStandaloneConfiguration config = jedisFactory.getStandaloneConfiguration();
+    assertEquals(host, config.getHostName());
+    assertEquals(port, config.getPort());
+
+    JedisClientConfiguration clientConfig = jedisFactory.getClientConfiguration();
+    assertTrue(clientConfig.isUseSsl());
   }
 
   @Test
