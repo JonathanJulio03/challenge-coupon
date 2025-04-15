@@ -1,0 +1,28 @@
+package challenge.meli.coupon.infraestructure.output.adapter.provider.command.response;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class ItemsResponse {
+
+    String code;
+    ItemResponse body;
+
+    @Data
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    public static class ItemResponse {
+        String id;
+        Double price;
+    }
+}

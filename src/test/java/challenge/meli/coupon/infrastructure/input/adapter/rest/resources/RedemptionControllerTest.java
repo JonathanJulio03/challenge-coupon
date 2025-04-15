@@ -1,0 +1,69 @@
+package challenge.meli.coupon.infrastructure.input.adapter.rest.resources;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.OK;
+
+import challenge.meli.coupon.application.input.RedemptionUseCase;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.ResponseEntity;
+
+@ExtendWith(MockitoExtension.class)
+class RedemptionControllerTest {
+
+  @InjectMocks
+  private RedemptionController controller;
+
+  @Mock
+  private RedemptionUseCase useCase;
+
+  @Test
+  void redemptionTop_ShouldReturn200_WhenDataIsPresent() {
+    Map<String, Integer> redemptionCount1 = new HashMap<>();
+    redemptionCount1.put("MLA1", 15);
+    Map<String, Integer> redemptionCount2 = new HashMap<>();
+    redemptionCount2.put("MLA4", 9);
+    List<Map<String, Integer>> redemptionCounts = Arrays.asList(redemptionCount1, redemptionCount2);
+
+    when(useCase.redemptionTop()).thenReturn(redemptionCounts);
+
+    ResponseEntity<List<Map<String, Integer>>> response = controller.redemptionTop();
+
+    assertThat(response.getStatusCode()).isEqualTo(OK);
+    assertThat(response.getBody()).hasSize(2);
+    assertThat(response.getBody().get(0)).containsEntry("MLA1", 15);
+    assertThat(response.getBody().get(1)).containsEntry("MLA4", 9);
+  }
+
+  @Test
+  void redemptionTop_ShouldReturn400_WhenBadRequest() {
+    when(useCase.redemptionTop()).thenThrow(new IllegalArgumentException("Bad request"));
+
+    try {
+      controller.redemptionTop();
+    } catch (Exception e) {
+      assertThat(e).isInstanceOf(IllegalArgumentException.class)
+          .hasMessage("Bad request");
+    }
+  }
+
+  @Test
+  void redemptionTop_ShouldReturn500_WhenUseCaseThrowsException() {
+    when(useCase.redemptionTop()).thenThrow(new RuntimeException("Internal Server Error"));
+
+    try {
+      controller.redemptionTop();
+    } catch (Exception e) {
+      assertThat(e).isInstanceOf(RuntimeException.class)
+          .hasMessage("Internal Server Error");
+    }
+  }
+}

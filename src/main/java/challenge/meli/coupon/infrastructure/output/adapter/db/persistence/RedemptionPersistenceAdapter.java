@@ -1,0 +1,30 @@
+package challenge.meli.coupon.infrastructure.output.adapter.db.persistence;
+
+import challenge.meli.coupon.application.output.DbPort;
+import challenge.meli.coupon.domain.ItemModel;
+import challenge.meli.coupon.domain.RedemptionModel;
+import challenge.meli.coupon.infrastructure.output.adapter.db.mapper.DbMapper;
+import challenge.meli.coupon.infrastructure.output.adapter.db.repository.RedemptionRepository;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class RedemptionPersistenceAdapter implements DbPort {
+
+    private final RedemptionRepository repository;
+    private final DbMapper mapper;
+
+    @Override
+    public void save(List<ItemModel> itemModel) {
+        repository.saveAll(mapper.toEntity(itemModel));
+    }
+
+    @Override
+    public List<RedemptionModel> getRedemptions() {
+        return repository.findTop5RedemptionsGroupedByItemId();
+    }
+}

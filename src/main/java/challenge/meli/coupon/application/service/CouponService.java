@@ -1,0 +1,67 @@
+package challenge.meli.coupon.application.service;
+
+import static challenge.meli.coupon.commons.helper.Constants.ERROR_THREAD_VIRTUAL;
+
+import challenge.meli.coupon.application.input.CouponUseCase;
+import challenge.meli.coupon.application.output.DbPort;
+import challenge.meli.coupon.commons.exception.ErrorException;
+import challenge.meli.coupon.domain.ItemModel;
+import challenge.meli.coupon.domain.strategy.FillCouponGetItem;
+import challenge.meli.coupon.domain.strategy.ItemFetcher;
+import challenge.meli.coupon.infrastructure.input.adapter.rest.command.request.CouponRequest;
+import challenge.meli.coupon.infrastructure.input.adapter.rest.command.response.CouponResponse;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = false)
+public class CouponService implements CouponUseCase {
+
+  private final DbPort output;
+  private final ItemFetcher itemFetcher;
+  private final FillCouponGetItem fillCouponGetItem;
+
+  @Override
+  public CouponResponse coupon(CouponRequest couponRequest) {
+
+    List<String> uniqueIds = new ArrayList<>(new LinkedHashSet<>(couponRequest.getItemIds()));
+
+    List<ItemModel> items;
+    List<ItemModel> selectedItems;
+
+    try (ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor()) {
+      items = executor.submit(() -> itemFetcher.fetch(uniqueIds)).get();
+      selectedItems = fillCouponGetItem.get(items, couponRequest.getAmount());
+    } catch (InterruptedException | ExecutionException e) {
+      Thread.currentThread().interrupt();
+      throw new ErrorException(ERROR_THREAD_VIRTUAL);
+    } catch (IndexOutOfBoundsException ex) {
+      log.error("{}", ex.getMessage(), ex);
+      throw new ErrorException(ERROR_THREAD_VIRTUAL);
+    }
+
+    Optional.of(selectedItems)
+        .map(list -> list.stream()
+            .map(item -> new ItemModel(item.getId(), item.getPrice()))
+            .toList())
+        .filter(list -> !list.isEmpty())
+        .ifPresent(output::save);
+
+    return CouponResponse.builder().itemIds(selectedItems.stream().map(ItemModel::getId).toList())
+        .total(BigDecimal.valueOf(selectedItems.stream().mapToDouble(ItemModel::getPrice).sum())
+            .setScale(2, RoundingMode.HALF_UP).doubleValue()).build();
+  }
+}

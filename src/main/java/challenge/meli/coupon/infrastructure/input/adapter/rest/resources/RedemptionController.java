@@ -1,0 +1,41 @@
+package challenge.meli.coupon.infrastructure.input.adapter.rest.resources;
+
+import static org.springframework.http.HttpStatus.OK;
+
+import challenge.meli.coupon.application.input.RedemptionUseCase;
+import challenge.meli.coupon.domain.ErrorModel;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
+import java.util.Map;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+@Tag(name = "Redemption", description = "Service to obtain redeemed items")
+@RequestMapping("/redemption-top")
+public class RedemptionController {
+
+  private final RedemptionUseCase useCase;
+
+  @ApiResponse(responseCode = "200", description = "Request Success", content = {
+      @Content(mediaType = "application/json",
+          schema = @Schema(type = "array",
+              description = "List of coupon redemption counts",
+              implementation = Map.class,
+              example = "[{\"MLA1\": 15}, {\"MLA4\": 9}]"))})
+  @ApiResponse(responseCode = "400", description = "Bad Request", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))})
+  @ApiResponse(responseCode = "404", description = "Not Found", content = {
+      @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorModel.class))})
+  @GetMapping
+  public ResponseEntity<List<Map<String, Integer>>> redemptionTop() {
+    return new ResponseEntity<>(useCase.redemptionTop(), OK);
+  }
+}

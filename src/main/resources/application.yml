@@ -1,0 +1,75 @@
+## SERVER
+server:
+  port: 8080
+  compression:
+    enabled: true
+  error:
+    include-stacktrace: never
+    whitelabel:
+      enabled: false
+
+## APPLICATION
+spring:
+  application:
+    name: api-coupon
+    version: v1.0.0
+    restPort: ${server.port}
+  profiles:
+    include: ${ENVIRONMENT}
+
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_DB}?authSource=admin
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 5000
+            read-timeout: 5000
+            logger-level: FULL
+    loadbalancer:
+      instances:
+        provider:
+          - ${BASE_HOST}
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    timeout: 2000
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 5
+        min-idle: 1
+        max-wait: -1
+    ssl: ${REDIS_SSL}
+
+client:
+  api:
+    host: ${BASE_HOST}
+    token: /oauth/token
+    items: /items
+
+    credentials:
+      clientId: ${API_CLIENT_ID}
+      secret: ${API_SECRET}
+      code: ${API_CODE}
+      redirect: ${API_REDIRECT}
+
+resilience4j:
+  retry:
+    instances:
+      itemsRetry:
+        maxAttempts: 3
+        waitDuration: 1000ms
+
+properties:
+  schedulers:
+    token:
+      name: "task_Token"
+      rate: "20000" #20 Seconds
+logging:
+  level:
+    feign: DEBUG

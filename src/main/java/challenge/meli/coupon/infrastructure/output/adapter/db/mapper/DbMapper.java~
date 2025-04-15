@@ -1,0 +1,16 @@
+package challenge.meli.coupon.infrastructure.output.adapter.db.mapper;
+
+import challenge.meli.coupon.domain.ItemModel;
+import challenge.meli.coupon.infrastructure.output.adapter.db.entities.Redemption;
+import java.util.List;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.ReportingPolicy;
+
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+public interface DbMapper {
+    @Mapping(target = "itemId", source = "id")
+    Redemption toEntity(ItemModel itemModel);
+    List<Redemption> toEntity(List<ItemModel> itemModels);
+}
