@@ -8,6 +8,14 @@ server:
     whitelabel:
       enabled: false
 
+## Swagger-UI
+springdoc:
+  api-docs:
+    path: /api
+  swagger-ui:
+    path: /swagger-ui.html
+  paths-to-exclude: /swagger-resources/**
+
 ## APPLICATION
 spring:
   application:
